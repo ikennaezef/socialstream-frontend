@@ -80,7 +80,17 @@ const LoginForm = () => {
 			onSubmitProps.resetForm();
 
 			if (loggedIn) {
-				dispatch(setLogin({ user: loggedIn.user, token: loggedIn.token }));
+				const picturePath =
+					loggedIn.user.picturePath === ""
+						? "default_pfp.jpg"
+						: loggedIn.user.picturePath;
+
+				dispatch(
+					setLogin({
+						user: { ...loggedIn.user, picturePath },
+						token: loggedIn.token,
+					})
+				);
 				navigate("/home");
 			}
 		} else {
@@ -209,7 +219,7 @@ const LoginForm = () => {
 												border={`2px dashed ${palette.primary.main}`}
 												p="1rem"
 												sx={{ "&:hover": { cursor: "pointer" } }}>
-												<input {...getInputProps} />
+												<input {...getInputProps} style={{ display: "none" }} />
 												{!values.picture ? (
 													<p>Add picture here</p>
 												) : (
