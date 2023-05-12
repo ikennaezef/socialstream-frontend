@@ -7,6 +7,7 @@ import {
 	TextField,
 	Button,
 	useMediaQuery,
+	CircularProgress,
 } from "@mui/material";
 import { EditOutlined } from "@mui/icons-material";
 import { Formik } from "formik";
@@ -27,7 +28,7 @@ const registerSchema = yup.object({
 		.required("This field is required"),
 	location: yup.string().required("This field is required"),
 	occupation: yup.string().required("This field is required"),
-	picture: yup.string().required("This field is required"),
+	picture: yup.string(),
 });
 
 const loginSchema = yup.object({
@@ -51,6 +52,7 @@ const initialLoginValues = {
 };
 
 const LoginForm = () => {
+	const [loading, setLoading] = useState(false);
 	const [pageType, setPageType] = useState("login");
 	const [error, setError] = useState({ state: false, message: "" });
 	const { palette } = useTheme();
@@ -66,6 +68,7 @@ const LoginForm = () => {
 	}, [pageType]);
 
 	const login = async (values, onSubmitProps) => {
+		setLoading(true);
 		const loggedInResponse = await fetch(
 			"http://localhost:3001/api/auth/login",
 			{
@@ -76,6 +79,7 @@ const LoginForm = () => {
 		);
 
 		if (loggedInResponse.ok) {
+			setLoading(false);
 			const loggedIn = await loggedInResponse.json();
 			onSubmitProps.resetForm();
 
@@ -94,17 +98,21 @@ const LoginForm = () => {
 				navigate("/home");
 			}
 		} else {
+			setLoading(false);
 			const response = await loggedInResponse.json();
 			setError({ state: true, message: response.message });
 		}
 	};
 
 	const register = async (values, onSubmitProps) => {
+		setLoading(true);
 		const formData = new FormData();
 		for (let value in values) {
 			formData.append(value, values[value]);
 		}
-		formData.append("picturePath", values.picture.name);
+		if (values.picture !== "" && values.picture) {
+			formData.append("picturePath", values.picture.name);
+		}
 
 		const savedUserResponse = await fetch(
 			"http://localhost:3001/api/auth/register",
@@ -115,6 +123,7 @@ const LoginForm = () => {
 		);
 
 		if (savedUserResponse.ok) {
+			setLoading(false);
 			const savedUser = await savedUserResponse.json();
 			onSubmitProps.resetForm();
 
@@ -122,6 +131,7 @@ const LoginForm = () => {
 				setPageType("login");
 			}
 		} else {
+			setLoading(false);
 			const response = await savedUserResponse.json();
 			setError({ state: true, message: response.message });
 		}
@@ -267,6 +277,7 @@ const LoginForm = () => {
 					{/* BUTTONS */}
 					<Box>
 						<Button
+							disabled={loading}
 							fullWidth
 							type="submit"
 							sx={{
@@ -275,8 +286,15 @@ const LoginForm = () => {
 								backgroundColor: palette.primary.main,
 								color: palette.background.alt,
 								"&:hover": { color: palette.primary.main },
+								"&:disabled": { color: palette.neutral.medium },
 							}}>
-							{isLogin ? "LOGIN" : "REGISTER"}
+							{loading ? (
+								<CircularProgress size={24} color="inherit" />
+							) : isLogin ? (
+								"LOGIN"
+							) : (
+								"REGISTER"
+							)}
 						</Button>
 						<Typography
 							onClick={() => {
