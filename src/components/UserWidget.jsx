@@ -11,21 +11,26 @@ import {
 import UserImage from "./UserImage";
 import FlexBetween from "./FlexBetween";
 import WidgetWrapper from "./WidgetWrapper";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import Loader from "./Loader";
 
 const UserWidget = ({ userId, picturePath }) => {
+	const [loading, setLoading] = useState(false);
 	const [user, setUser] = useState(null);
 	const { palette } = useTheme();
 	const navigate = useNavigate();
+	const dispatch = useDispatch();
 
 	const token = useSelector((state) => state.token);
+	const friendsList = useSelector((state) => state.friendsList);
 
 	const dark = palette.neutral.dark;
 	const medium = palette.neutral.medium;
 	const main = palette.neutral.main;
 
 	const getUser = async () => {
+		setLoading(true);
 		const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
 			method: "GET",
 			headers: { Authorization: `Bearer ${token}` },
@@ -34,12 +39,23 @@ const UserWidget = ({ userId, picturePath }) => {
 		if (response.ok) {
 			const data = await response.json();
 			setUser(data);
+			setLoading(false);
+		} else {
+			setLoading(false);
 		}
 	};
 
 	useEffect(() => {
 		getUser();
 	}, []);
+
+	if (loading) {
+		return (
+			<WidgetWrapper>
+				<Loader />
+			</WidgetWrapper>
+		);
+	}
 
 	if (!user) {
 		return null;
@@ -50,9 +66,9 @@ const UserWidget = ({ userId, picturePath }) => {
 		lastName,
 		location,
 		occupation,
+		picturePath: userPicture,
 		viewedProfile,
 		impressions,
-		friends,
 	} = user;
 
 	return (
@@ -62,7 +78,7 @@ const UserWidget = ({ userId, picturePath }) => {
 				pb="1.1rem"
 				onClick={() => navigate(`/profile/${userId}`)}>
 				<FlexBetween gap="1rem">
-					<UserImage image={picturePath} />
+					<UserImage image={picturePath ? picturePath : userPicture} />
 					<Box>
 						<Typography
 							variant="h4"
@@ -76,7 +92,7 @@ const UserWidget = ({ userId, picturePath }) => {
 							}}>
 							{firstName} {lastName}
 						</Typography>
-						<Typography>{friends?.length}</Typography>
+						<Typography>{friendsList?.length}</Typography>
 					</Box>
 				</FlexBetween>
 				<ManageAccountsOutlined />

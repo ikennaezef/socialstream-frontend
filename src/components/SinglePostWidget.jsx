@@ -61,6 +61,7 @@ const SinglePostWidget = ({
 				name={name}
 				subtitle={location}
 				userPicturePath={userPicturePath}
+				isEditable
 			/>
 			<Typography color={main} sx={{ mt: "1rem" }}>
 				{description}
@@ -71,7 +72,7 @@ const SinglePostWidget = ({
 					height="auto"
 					alt="post"
 					style={{ borderRadius: "0.75rem", marginTop: "0.75rem" }}
-					src={`http://localhost:3001/assets/${picturePath}`}
+					src={picturePath}
 				/>
 			)}
 			<FlexBetween mt="0.25rem">

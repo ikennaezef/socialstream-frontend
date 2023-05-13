@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { setPosts } from "../features";
 import SinglePostWidget from "./SinglePostWidget";
-import { Box } from "@mui/material";
+import { Box, Typography, useTheme } from "@mui/material";
 
 const PostsWidget = ({ userId, isProfile = false }) => {
 	const dispatch = useDispatch();
 	const posts = useSelector((state) => state.posts);
 	const token = useSelector((state) => state.token);
+
+	const { palette } = useTheme();
 
 	const endpoint = isProfile
 		? `http://localhost:3001/api/posts/${userId}/posts`
@@ -21,7 +23,6 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
 		if (response.ok) {
 			const data = await response.json();
-			console.log(data);
 			dispatch(setPosts({ posts: data }));
 		} else {
 			const res = await response.json();
@@ -35,33 +36,30 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 
 	return (
 		<Box>
-			{posts?.map(
-				({
-					_id,
-					userId,
-					firstName,
-					lastName,
-					description,
-					location,
-					picturePath,
-					userPicturePath,
-					likes,
-					comments,
-				}) => (
-					<SinglePostWidget
-						key={_id}
-						postId={_id}
-						postUserId={userId}
-						name={`${firstName} ${lastName}`}
-						description={description}
-						location={location}
-						picturePath={picturePath}
-						userPicturePath={userPicturePath}
-						likes={likes}
-						comments={comments}
-					/>
-					// <p key={_id}>Heloooo</p>
-				)
+			{posts?.map((post) => (
+				<SinglePostWidget
+					key={post._id}
+					postId={post._id}
+					postUserId={post.userId}
+					name={`${post.firstName} ${post.lastName}`}
+					description={post.description}
+					location={post.location}
+					picturePath={post.picturePath}
+					userPicturePath={post.userPicturePath}
+					likes={post.likes}
+					comments={post.comments}
+				/>
+			))}
+			{posts.length < 1 && (
+				<Box>
+					<Typography
+						variant="h4"
+						fontWeight="400"
+						m="1rem 0"
+						color={palette.neutral.medium}>
+						No posts yet.
+					</Typography>
+				</Box>
 			)}
 		</Box>
 	);

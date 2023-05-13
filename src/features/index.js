@@ -3,6 +3,8 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
 	mode: "light",
 	user: null,
+	isProfilePage: false,
+	friendsList: [],
 	token: null,
 	posts: [],
 };
@@ -21,6 +23,7 @@ export const authSlice = createSlice({
 		setLogout: (state) => {
 			state.user = null;
 			state.token = null;
+			state.isProfilePage = false;
 		},
 		setFriends: (state, action) => {
 			if (state.user) {
@@ -40,6 +43,12 @@ export const authSlice = createSlice({
 
 			state.posts = updatedPosts;
 		},
+		setFriendsList: (state, action) => {
+			state.friendsList = action.payload.friendsList;
+		},
+		setProfilePage: (state, action) => {
+			state.isProfilePage = action.payload;
+		},
 	},
 });
 
@@ -50,6 +59,8 @@ export const {
 	setLogout,
 	setPost,
 	setPosts,
+	setFriendsList,
+	setProfilePage,
 } = authSlice.actions;
 
 export default authSlice.reducer;
