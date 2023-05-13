@@ -11,7 +11,7 @@ import { useDispatch, useSelector } from "react-redux";
 import FlexBetween from "./FlexBetween";
 import UserImage from "./UserImage";
 import { useNavigate } from "react-router-dom";
-import { setFriends, setFriendsList } from "../features";
+import { setFriends, setFriendsList, setSnackbar } from "../features";
 
 const Friend = ({ friendId, name, subtitle, userPicturePath, isEditable }) => {
 	const [loading, setLoading] = useState(false);
@@ -65,12 +65,27 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isEditable }) => {
 		if (response.ok) {
 			const newFriends = await response.json();
 			const newList = newFriends.map((friend) => friend._id);
+			dispatch(
+				setSnackbar({
+					state: "success",
+					message: !isFriend ? "Friend added!" : "Friend removed",
+					isOpen: true,
+				})
+			);
 			dispatch(setFriends({ friends: newList }));
 			if (isProfilePage) {
 				getProfileFriends(friendId);
 			} else {
 				getProfileFriends(id);
 			}
+		} else {
+			dispatch(
+				setSnackbar({
+					state: "error",
+					message: "Could not add/remove friend",
+					isOpen: true,
+				})
+			);
 		}
 		setLoading(false);
 	};

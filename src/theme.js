@@ -26,6 +26,11 @@ export const colorTokens = {
 		800: "#003f26",
 		900: "#001911",
 	},
+	error: {
+		200: "#f87777",
+		300: "#f34f4f",
+		500: "#d22424",
+	},
 };
 
 export const themeSettings = (mode) => {
@@ -37,8 +42,14 @@ export const themeSettings = (mode) => {
 						// Dark mode palette
 						primary: {
 							dark: colorTokens.primary[200],
+							mediumMain: colorTokens.primary[600],
 							main: colorTokens.primary[500],
 							light: colorTokens.primary[800],
+						},
+						error: {
+							dark: colorTokens.error[200],
+							main: colorTokens.error[300],
+							light: colorTokens.error[500],
 						},
 						neutral: {
 							dark: colorTokens.grey[100],
@@ -56,8 +67,14 @@ export const themeSettings = (mode) => {
 						// Light mode palette
 						primary: {
 							dark: colorTokens.primary[700],
+							mediumMain: colorTokens.primary[600],
 							main: colorTokens.primary[500],
 							light: colorTokens.primary[50],
+						},
+						error: {
+							dark: colorTokens.error[500],
+							main: colorTokens.error[300],
+							light: colorTokens.error[200],
 						},
 						neutral: {
 							dark: colorTokens.grey[700],

@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { themeSettings } from "./theme";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import { createTheme } from "@mui/material/styles";
+import CustomSnackbar from "./components/CustomSnackbar";
 
 function App() {
 	const mode = useSelector((state) => state.mode);
@@ -18,6 +19,7 @@ function App() {
 		<BrowserRouter>
 			<ThemeProvider theme={theme}>
 				<CssBaseline />
+				<CustomSnackbar />
 				<Routes>
 					<Route path="/" element={<LoginPage />} />
 					<Route

@@ -7,6 +7,11 @@ const initialState = {
 	friendsList: [],
 	token: null,
 	posts: [],
+	snackBar: {
+		isOpen: false,
+		state: "success",
+		message: "",
+	},
 };
 
 export const authSlice = createSlice({
@@ -49,6 +54,9 @@ export const authSlice = createSlice({
 		setProfilePage: (state, action) => {
 			state.isProfilePage = action.payload;
 		},
+		setSnackbar: (state, action) => {
+			state.snackBar = { ...state.snackBar, ...action.payload };
+		},
 	},
 });
 
@@ -61,6 +69,7 @@ export const {
 	setPosts,
 	setFriendsList,
 	setProfilePage,
+	setSnackbar,
 } = authSlice.actions;
 
 export default authSlice.reducer;
