@@ -17,6 +17,7 @@ import Loader from "./Loader";
 
 const UserWidget = ({ userId, picturePath }) => {
 	const [loading, setLoading] = useState(false);
+	const [error, setError] = useState(false);
 	const [user, setUser] = useState(null);
 	const { palette } = useTheme();
 	const navigate = useNavigate();
@@ -31,6 +32,7 @@ const UserWidget = ({ userId, picturePath }) => {
 
 	const getUser = async () => {
 		setLoading(true);
+		setError(false);
 		const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
 			method: "GET",
 			headers: { Authorization: `Bearer ${token}` },
@@ -42,6 +44,7 @@ const UserWidget = ({ userId, picturePath }) => {
 			setLoading(false);
 		} else {
 			setLoading(false);
+			setError(true);
 		}
 	};
 
@@ -53,6 +56,16 @@ const UserWidget = ({ userId, picturePath }) => {
 		return (
 			<WidgetWrapper>
 				<Loader />
+			</WidgetWrapper>
+		);
+	}
+
+	if (error) {
+		return (
+			<WidgetWrapper>
+				<Typography p="1rem 0 1.5rem" color={medium}>
+					An error occured. Could not fetch user.
+				</Typography>
 			</WidgetWrapper>
 		);
 	}

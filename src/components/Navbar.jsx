@@ -10,6 +10,7 @@ import {
 	FormControl,
 	useTheme,
 	useMediaQuery,
+	Switch,
 } from "@mui/material";
 import {
 	Search,
@@ -141,16 +142,16 @@ const Navbar = () => {
 						justifyContent="center"
 						alignItems="center"
 						gap="3rem">
-						<IconButton onClick={() => dispatch(toggleMode())}>
-							{theme.palette.mode === "dark" ? (
-								<DarkMode sx={{ fontSize: "20px" }} />
-							) : (
-								<LightMode sx={{ color: dark, fontSize: "20px" }} />
-							)}
-						</IconButton>
 						<Message sx={{ fontSize: "25px" }} />
 						<Notifications sx={{ fontSize: "25px" }} />
 						<Help sx={{ fontSize: "25px" }} />
+						<FlexBetween>
+							<Typography>Dark mode</Typography>
+							<Switch
+								checked={theme.palette.mode === "dark"}
+								onChange={() => dispatch(toggleMode())}
+							/>
+						</FlexBetween>
 						<FormControl variant="standard" value={fullName}>
 							<Select
 								value={fullName}
