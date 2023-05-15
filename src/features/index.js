@@ -29,6 +29,7 @@ export const authSlice = createSlice({
 			state.user = null;
 			state.token = null;
 			state.isProfilePage = false;
+			state.friendsList = [];
 		},
 		setFriends: (state, action) => {
 			if (state.user) {

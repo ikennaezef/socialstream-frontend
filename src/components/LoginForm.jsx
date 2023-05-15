@@ -14,7 +14,7 @@ import { Formik } from "formik";
 import * as yup from "yup";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
-import { setLogin } from "../features";
+import { setLogin, setSnackbar } from "../features";
 import Dropzone from "react-dropzone";
 import FlexBetween from "./FlexBetween";
 
@@ -126,6 +126,13 @@ const LoginForm = () => {
 			setLoading(false);
 			const savedUser = await savedUserResponse.json();
 			onSubmitProps.resetForm();
+			dispatch(
+				setSnackbar({
+					isOpen: true,
+					status: "success",
+					message: "User registered successfully!",
+				})
+			);
 
 			if (savedUser) {
 				setPageType("login");
