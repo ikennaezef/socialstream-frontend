@@ -12,8 +12,8 @@ const PostsWidget = ({ userId, isProfile = false }) => {
 	const { palette } = useTheme();
 
 	const endpoint = isProfile
-		? `http://localhost:3001/api/posts/${userId}/posts`
-		: "http://localhost:3001/api/posts";
+		? `https://socialstream-backend.vercel.app/api/posts/${userId}/posts`
+		: "https://socialstream-backend.vercel.app/api/posts";
 
 	const getPosts = async () => {
 		const response = await fetch(endpoint, {

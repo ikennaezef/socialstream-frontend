@@ -22,12 +22,15 @@ const ProfilePage = () => {
 	const isLoggedInUser = userId === id;
 
 	const getUser = async () => {
-		const response = await fetch(`http://localhost:3001/api/users/${userId}`, {
-			method: "GET",
-			headers: {
-				Authorization: `Bearer ${token}`,
-			},
-		});
+		const response = await fetch(
+			`https://socialstream-backend.vercel.app/api/users/${userId}`,
+			{
+				method: "GET",
+				headers: {
+					Authorization: `Bearer ${token}`,
+				},
+			}
+		);
 
 		if (response.ok) {
 			const data = await response.json();

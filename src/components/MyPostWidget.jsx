@@ -54,11 +54,14 @@ const MyPostWidget = ({ picturePath }) => {
 			formData.append("picturePath", image.name);
 		}
 
-		const postResponse = await fetch(`http://localhost:3001/api/posts`, {
-			method: "POST",
-			headers: { Authorization: `Bearer ${token}` },
-			body: formData,
-		});
+		const postResponse = await fetch(
+			`https://socialstream-backend.vercel.app/api/posts`,
+			{
+				method: "POST",
+				headers: { Authorization: `Bearer ${token}` },
+				body: formData,
+			}
+		);
 
 		const response = await postResponse.json();
 		if (postResponse.ok) {

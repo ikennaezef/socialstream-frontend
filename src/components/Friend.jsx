@@ -33,7 +33,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isEditable }) => {
 
 	const getProfileFriends = async (profileId) => {
 		const response = await fetch(
-			`http://localhost:3001/api/users/${profileId}/friends`,
+			`https://socialstream-backend.vercel.app/api/users/${profileId}/friends`,
 			{
 				method: "GET",
 				headers: {
@@ -52,7 +52,7 @@ const Friend = ({ friendId, name, subtitle, userPicturePath, isEditable }) => {
 	const patchFriend = async () => {
 		setLoading(true);
 		const response = await fetch(
-			`http://localhost:3001/api/users/${id}/${friendId}`,
+			`https://socialstream-backend.vercel.app/api/users/${id}/${friendId}`,
 			{
 				method: "PATCH",
 				headers: {

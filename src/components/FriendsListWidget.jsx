@@ -20,7 +20,7 @@ const FriendsListWidget = ({ userId, editable = false }) => {
 		setError(false);
 		setLoading(true);
 		const response = await fetch(
-			`http://localhost:3001/api/users/${userId}/friends`,
+			`https://socialstream-backend.vercel.app/api/users/${userId}/friends`,
 			{
 				method: "GET",
 				headers: {

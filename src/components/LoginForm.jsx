@@ -70,7 +70,7 @@ const LoginForm = () => {
 	const login = async (values, onSubmitProps) => {
 		setLoading(true);
 		const loggedInResponse = await fetch(
-			"http://localhost:3001/api/auth/login",
+			`https://socialstream-backend.vercel.app/api/auth/login`,
 			{
 				method: "POST",
 				headers: { "Content-Type": "application/json" },
@@ -115,7 +115,7 @@ const LoginForm = () => {
 		}
 
 		const savedUserResponse = await fetch(
-			"http://localhost:3001/api/auth/register",
+			"https://socialstream-backend.vercel.app/api/auth/register",
 			{
 				method: "POST",
 				body: formData,
