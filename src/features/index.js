@@ -23,6 +23,7 @@ export const authSlice = createSlice({
 		},
 		setLogin: (state, action) => {
 			state.user = action.payload.user;
+			state.friendsList = action.payload.user.friends;
 			state.token = action.payload.token;
 		},
 		setLogout: (state) => {

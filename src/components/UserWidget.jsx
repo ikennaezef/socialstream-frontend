@@ -11,7 +11,7 @@ import {
 import UserImage from "./UserImage";
 import FlexBetween from "./FlexBetween";
 import WidgetWrapper from "./WidgetWrapper";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import Loader from "./Loader";
 
@@ -21,7 +21,6 @@ const UserWidget = ({ userId, picturePath }) => {
 	const [user, setUser] = useState(null);
 	const { palette } = useTheme();
 	const navigate = useNavigate();
-	const dispatch = useDispatch();
 
 	const token = useSelector((state) => state.token);
 	const friendsList = useSelector((state) => state.friendsList);

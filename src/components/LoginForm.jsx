@@ -84,14 +84,9 @@ const LoginForm = () => {
 			onSubmitProps.resetForm();
 
 			if (loggedIn) {
-				const picturePath =
-					loggedIn.user.picturePath === ""
-						? "default_pfp.jpg"
-						: loggedIn.user.picturePath;
-
 				dispatch(
 					setLogin({
-						user: { ...loggedIn.user, picturePath },
+						user: { ...loggedIn.user },
 						token: loggedIn.token,
 					})
 				);
