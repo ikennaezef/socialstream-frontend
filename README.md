@@ -1,6 +1,6 @@
 # SocialStream Frontend
 
-Frontend for the SocialStream App
+Frontend for the SocialStream App. The backend code can be found [HERE](https://github.com/ikennaezef/socialstream-backend)
 
 ## Overview
 
